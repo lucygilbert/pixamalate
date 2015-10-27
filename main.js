@@ -16,6 +16,7 @@ const Pixamalate = {
 
     this.drawOriginalImage();
     let imageArray = this.divideImage();
+    let colorImageArray = this.getAverageColor(imageArray);
   },
 
   drawOriginalImage() {
@@ -28,17 +29,39 @@ const Pixamalate = {
 
   divideImage() {
     let imageArray = [];
-    
+
     for (var i = 0; i <= this.canvas.width; i += Math.ceil(this.canvas.width / BLOCK_SIZE)) {
       for (var j = 0; j <= this.canvas.height; j += Math.ceil(this.canvas.height / BLOCK_SIZE)) {
         imageArray.push({
-          'x': i, 
-          'y': j, 
-          'width': Math.ceil(this.canvas.width / BLOCK_SIZE), 
-          'height': Math.ceil(this.canvas.height / BLOCK_SIZE)
+          x: i, 
+          y: j, 
+          width: Math.ceil(this.canvas.width / BLOCK_SIZE), 
+          height: Math.ceil(this.canvas.height / BLOCK_SIZE)
         });
       };
     };
+
+    return imageArray;
+  },
+
+  getAverageColor(imageArray) {
+    imageArray.forEach(function(item) {
+      let colorData = this.context.getImageData(item.x, item.y, item.width, item.height).data;
+      let colorSum = {r: 0, g: 0, b: 0};
+      let totalPixels = item.width * item.height;
+
+      for (var i = 0; i < colorData.length; i += 4) {
+        colorSum.r += colorData[i];
+        colorSum.g += colorData[i + 1];
+        colorSum.b += colorData[i + 2];
+      };
+
+      item.colorAverage = {
+        r: Math.round(colorSum.r / totalPixels),
+        g: Math.round(colorSum.g / totalPixels),
+        b: Math.round(colorSum.b / totalPixels)
+      };
+    }, this);
 
     return imageArray;
   }
