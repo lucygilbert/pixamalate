@@ -1,6 +1,6 @@
 "use strict";
 
-const BLOCK_SIZE = 20;
+const BLOCK_SIZE = 60;
 
 const Pixamalate = {
   canvas: null,
@@ -17,6 +17,7 @@ const Pixamalate = {
     this.drawOriginalImage();
     let imageArray = this.divideImage();
     let colorImageArray = this.getAverageColor(imageArray);
+    this.drawBlocks(colorImageArray);
   },
 
   drawOriginalImage() {
@@ -64,6 +65,13 @@ const Pixamalate = {
     }, this);
 
     return imageArray;
+  },
+
+  drawBlocks(colorImageArray) {
+    colorImageArray.forEach(function(item) {
+      this.context.fillStyle = 'rgba('+item.colorAverage.r+','+item.colorAverage.g+','+item.colorAverage.b+',255)';
+      this.context.fillRect(item.x, item.y, item.width, item.height);
+    }, this);
   }
 };
 
