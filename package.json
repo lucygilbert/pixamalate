@@ -1,0 +1,22 @@
+{
+  "name": "pixamalate",
+  "version": "1.0.0",
+  "description": "A simple tool for pixelating images using Javascript.",
+  "main": "main.js",
+  "scripts": {
+    "start": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucygilbert/pixamalate.git"
+  },
+  "author": "Lucy Gilbert",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucygilbert/pixamalate/issues"
+  },
+  "homepage": "https://github.com/lucygilbert/pixamalate",
+  "devDependencies": {
+    "http-server": "^0.10.0"
+  }
+}
