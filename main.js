@@ -2,6 +2,23 @@
 
 const BLOCK_SIZE = 60;
 
+function handleImageChange() {
+  const fileUpload = document.getElementById('custom-image');
+  const image = document.getElementById('image');
+  fileUpload.onchange = function () {
+    if (fileUpload.files && fileUpload.files[0]) {
+      const fileReader = new FileReader();
+      fileReader.onloadend = function () {
+        image.src = fileReader.result;
+      }
+      fileReader.readAsDataURL(fileUpload.files[0]);
+    }
+  };
+  image.onload = function () {
+    Pixamalate.init();
+  }
+}
+
 const Pixamalate = {
   canvas: null,
 
@@ -12,7 +29,7 @@ const Pixamalate = {
   init() {
     this.canvas = document.getElementsByTagName('canvas')[0];
     this.context = this.canvas.getContext('2d');
-    this.originalImage = document.getElementsByTagName('img')[0];
+    this.originalImage = document.getElementById('image');
 
     this.drawOriginalImage();
     let imageArray = this.divideImage();
@@ -75,4 +92,7 @@ const Pixamalate = {
   }
 };
 
-window.addEventListener('load', () => { Pixamalate.init() });
+window.addEventListener('load', () => {
+  Pixamalate.init();
+  handleImageChange();
+});
