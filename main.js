@@ -19,6 +19,15 @@ function handleImageChange() {
   }
 }
 
+function handleDownload() {
+  const downloadButton = document.getElementById('download');
+  const canvas = document.getElementsByTagName('canvas')[0];
+  downloadButton.onclick = () => {
+    downloadButton.href = canvas.toDataURL();
+    downloadButton.download = 'pixelated-image.png';
+  };
+}
+
 const Pixamalate = {
   canvas: null,
 
@@ -95,4 +104,5 @@ const Pixamalate = {
 window.addEventListener('load', () => {
   Pixamalate.init();
   handleImageChange();
+  handleDownload();
 });
